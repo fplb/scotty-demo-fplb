@@ -27,12 +27,12 @@ allVoyagers = [scot, numberOne]
 matchesId :: Int -> Voyager -> Bool
 matchesId id voyager = voyagerId voyager == id
 
-
 main = do
   putStrLn "Starting server"
   scotty 5000 $ do
     get "/beam/:name" $ do
       name <- param "name"
+
       text ("beam" <> name <> "!")
 
     get "/voyagers" $ do
@@ -41,9 +41,3 @@ main = do
     get "/voyagers/:id" $ do
       id <- param "id"
       json (filter (matchesId id) allVoyagers)
-
-    post "/voyagers" $ do
-      voyager <- jsonData :: ActionM Voyager
-      json voyager
-
-
